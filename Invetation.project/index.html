@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Eslam&Aya</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">   
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f4;
+        }
+        /* 1. التنسيقات الأساسية (html, body, .container, .page) */
+        
+        /* 2. تنسيق العناصر الصاعدة (القلوب والورود) */
+        .roses-container { position: fixed; bottom: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; }
+        .rose { position: absolute; bottom: -50px; opacity: 0; animation: roseFloat 6s linear forwards; }
+        @keyframes roseFloat {
+            0% { transform: translateY(0) rotate(0deg) scale(0.5); opacity: 0; }
+            10% { opacity: 0.8; }
+            50% { transform: translateY(-50vh) rotate(180deg) translateX(20px) scale(1); }
+            100% { transform: translateY(-110vh) rotate(360deg) translateX(-20px) scale(0.8); opacity: 0; }
+        }
+
+        /* 3. تنسيق الظرف مع حركة الاهتزاز */
+        .envelope-wrapper { animation: bounce 2s infinite ease-in-out; cursor: pointer; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        
+  
+        
+        
+        /* 5. تأثير الضغط على الأزرار */
+        .btn:active, .glass-card:active { transform: scale(0.95); transition: transform 0.1s ease; }
+
+        .container {
+            width: 100%;
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            position: relative;
+        }
+
+        .container::-webkit-scrollbar {
+            width: 0px;
+        }
+
+        .page {
+            width: 100%;
+            height: 100vh;
+            scroll-snap-align: start;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+            text-align: center;
+            padding: 20px;
+        }
+
+    /* تأثير القلوب الصاعدة من الأسفل للأعلى */
+.heart {
+    position: fixed;
+    color: #ffb3b3;
+    font-size: 24px;
+    z-index: 9999 !important;
+    pointer-events: none;
+    /* ربط الأنيميشن بالاسم الجديد */
+    animation: floatUp 6s linear forwards;
+    bottom: -10vh; /* تبدأ من الأسفل */
+    opacity: 0;
+}
+
+@keyframes floatUp {
+    0% { 
+        transform: translateY(0) rotate(0deg) scale(0.5); 
+        opacity: 0; 
+    }
+    10% { 
+        opacity: 0.8; /* تظهر تدريجياً */
+    }
+    50% { 
+        transform: translateY(-50vh) rotate(180deg) translateX(20px) scale(1); 
+    }
+    100% { 
+        transform: translateY(-110vh) rotate(360deg) translateX(-20px) scale(0.8); 
+        opacity: 0; /* تختفي عند الوصول للقمة */
+    }
+}
+
+        /* خلفية القصر الموحدة */
+        .full-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('place.jpeg') no-repeat center center/cover;
+            z-index: 1;
+        }
+
+ .overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    /* غيري القيمة من 0.25 إلى 0 */
+    background: rgba(255, 255, 255, 0); 
+    z-index: 2;
+}
+
+        .content {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* صفحة 1: المظروف */
+        .main-title {
+            font-size: 26px;
+            letter-spacing: 5px;
+            color: #2d5a27;
+            font-weight: bold;
+            margin-bottom: 40px;
+            text-shadow: 1px 1px 4px rgba(255,255,255,0.8);
+        }
+.envelope-wrapper {
+    width: 85%;
+    max-width: 420px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    
+    /* هذه السطور تضمن عدم وجود أي خلفية أو إطار */
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+        .envelope-wrapper:hover { transform: scale(1.05); }
+        .envelope-img { width: 100%; height: auto; }
+
+        /* صفحة 2: الكارت الزجاجي الشفاف الفخم */
+.glass-card {
+    /* شفافية كاملة (لا يوجد لون خلفية) */
+    background: transparent; 
+    
+    /* تأثير تغبيش خفيف جداً للقصر اللي ورا عشان يفضل واضح */
+    backdrop-filter: blur(5px); 
+    -webkit-backdrop-filter: blur(5px);
+    
+    /* حدود شفافة رقيقة جداً لتعريف حواف الكارت فقط */
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    
+    /* بدون ظل نهائياً عشان يبان خفيف فوق القصر */
+    box-shadow: none;
+    
+    width: 90%;
+    max-width: 580px;
+    padding: 70px 40px;
+    border-radius: 20px;
+}
+/* هذا الكلاس سيُستخدم للأسماء في الصفحة الثانية وفي الزر في الصفحة الأخيرة */
+/* تنسيق الأسماء في الصفحة الثانية */
+.names {
+    font-family: 'Dancing Script', cursive !important;
+    font-size: 110px; /* تم التكبير ليصبح ضخماً */
+    font-weight: 700;
+    color: #2d5a27;
+    margin: 10px 0;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+    line-height: 1;
+}
+
+/* تنسيق الأسماء في الزر في الصفحة الأخيرة */
+/* تنسيق الزر الأساسي */
+.names-btn {
+    font-family: 'Dancing Script', cursive !important;
+    font-size: 70px;
+    font-weight: 700;
+    padding: 20px 60px;
+    background: rgba(255, 255, 255, 0.2); /* الخلفية الشفافة */
+    border: 1px solid rgba(45, 90, 39, 0.3);
+    border-radius: 50px;
+    color: #2d5a27;
+    text-decoration: none;
+    display: inline-block;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    transition: all 0.4s ease; /* ضمان نعومة الانتقال */
+    cursor: pointer;
+}
+
+/* التغيير عند تمرير الماوس (Hover) */
+.names-btn:hover {
+    background: #2d5a27 !important; /* اللون الزيتوني الغامق */
+    color: white !important;
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(45, 90, 39, 0.3);
+}
+
+/* التغيير عند الضغط الفعلي (Active) */
+.names-btn:active {
+    transform: scale(0.95); /* تأثير الضغطة */
+    background: #1e3d1a !important; /* لون أغمق عند الضغط */
+}
+
+/* تعديل للموبايل */
+@media (max-width: 600px) {
+    .names-btn { font-size: 45px; padding: 15px 40px; }
+}
+
+/* تعديل للموبايل (ليظل الحجم مناسباً للشاشات الصغيرة) */
+@media (max-width: 600px) {
+    .names { font-size: 65px; }
+    .names-btn { font-size: 45px; padding: 15px 40px; }
+}
+/* تعديل للموبايل */
+@media (max-width: 600px) {
+    .names { font-size: 50px; }
+    .names-btn { font-size: 35px; padding: 10px 30px; }
+}  
+        @media (max-width: 600px) { .names { font-size: 42px; } }
+        .sub-text {
+            font-size: 16px;
+            color: #4a6d46;
+            letter-spacing: 2px;
+            margin: 20px 0;
+            text-transform: uppercase;
+        }
+        .date-line {
+            font-size: 18px;
+            color: #2d5a27;
+            border-top: 1px solid rgba(45, 90, 39, 0.3);
+            border-bottom: 1px solid rgba(45, 90, 39, 0.3);
+            padding: 15px 0;
+            margin-top: 30px;
+            letter-spacing: 1px;
+        }
+
+        /* صفحة 3: العداد التنازلي الزيتوني */
+        .page3 { background-color: #8fa882; color: white; }
+        .timer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            width: 100%;
+            max-width: 650px;
+        }
+        @media (max-width: 550px) { .timer-grid { grid-template-columns: repeat(2, 1fr); } }
+        .time-box {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 30px 10px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .time-num { font-size: 38px; font-weight: bold; }
+
+        /* صفحة 4: قاعة الفرح والخريطة للفورسيزونز */
+        .map-card {
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 520px;
+            width: 90%;
+            box-sizing: border-box;
+        }
+        .map-img { width: 100%; height: auto; border-radius: 10px; display: block; }
+        .btn {
+            background: #2d5a27;
+            color: white;
+            padding: 12px 35px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+        .btn:hover { background: #1e3d1a; }
+
+        /* صفحة 5: صفحة الختام البيج الكلاسيكية */
+        .page5 {
+            background-color: #d1c7b1; 
+            color: #4a4538;
+        }
+        .invitation-text {
+            font-size: 19px;
+            line-height: 2;
+            letter-spacing: 1px;
+            font-family: 'Georgia', serif;
+            max-width: 700px;
+            padding: 0 20px;
+        }
+        @media (max-width: 768px) { .invitation-text { font-size: 15px; } }
+        /* تنسيق العناصر الصاعدة (ورد وقلوب) */
+.roses-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.rose {
+    position: absolute;
+    bottom: -50px;
+    opacity: 0;
+    animation: roseFloat 6s linear forwards;
+}
+
+@keyframes roseFloat {
+    0% { transform: translateY(0) rotate(0deg) scale(0.5); opacity: 0; }
+    10% { opacity: 0.8; }
+    50% { transform: translateY(-50vh) rotate(180deg) translateX(20px) scale(1); }
+    100% { transform: translateY(-110vh) rotate(360deg) translateX(-20px) scale(0.8); opacity: 0; }
+}
+/* 1. تعريف الأنيميشنز الأساسية */
+
+/* حركة الظهور التدريجي من الأسفل للأعلى (Fade In Up) */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px); /* يبدأ من تحت شوية */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0); /* يوصل لمكانه الطبيعي */
+    }
+}
+
+/* حركة التكبير التدريجي (Fade In Scale) - مناسبة جداً للكارت الزجاجي */
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.8); /* يبدأ أصغر شوية */
+    }
+    to {
+        opacity: 1;
+        transform: scale(1); /* يوصل لحجمه الطبيعي */
+    }
+}
+
+/* 2. تطبيق الحركات على العناصر محددة */
+
+/* تطبيق حركة Fade In Up على كل الصفحات */
+.page {
+    opacity: 0; /* نخليها مخفية في الأول */
+    animation: fadeInUp 1s ease-out forwards; /* تشغيل الحركة */
+    animation-play-state: paused; /* ميبدأش الأنيميشن إلا لما نفعله */
+}
+
+/* الكارت الزجاجي ليكون شفافاً وضبابياً ومحيطاً بالأسماء */
+/* الكارت الزجاجي ليكون شفافاً وضبابياً ومحيطاً بالأسماء */
+.glass-card {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 25px;
+    padding: 50px 30px; /* تقليل الـ padding ليأخذ الاسم مساحة أكبر */
+    width: 90%;
+    max-width: 600px;
+    text-align: center;
+    transition: transform 0.5s ease;
+}
+.glass-card:hover {
+    transform: scale(1.02); /* تكبير خفيف عند تمرير الماوس */
+}
+/* كود حركة الظهور التدريجي والصعود */
+.names {
+    animation: fadeInSlideUp 1.5s ease-out forwards;
+}
+
+@keyframes fadeInSlideUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px); /* يبدأ من الأسفل قليلاً */
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0); /* يستقر في مكانه */
+    }
+}
+
+.names {
+    font-family: 'Dancing Script', cursive !important;
+    font-size: 110px !important; /* حجم ضخم ومناسب */
+    color: #2d5a27 !important;
+    margin: 0 !important;
+    line-height: 0.9 !important; /* تقليل المسافة بين السطور لتبدو الأسماء متصلة */
+    font-weight: 700 !important;
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+    text-align: center;
+}
+
+/* تنسيق للموبايل لضمان عدم خروج الاسم عن الشاشة */
+@media (max-width: 600px) {
+    .names { font-size: 70px !important; }
+}
+
+/* تنسيق الجملة الفرعية */
+.sub-text {
+    font-size: 18px;
+    color: #4a6d46;
+    letter-spacing: 3px;
+    margin: 25px 0;
+    text-transform: uppercase;
+}
+
+/* تنسيق التاريخ */
+.date-line {
+    font-size: 20px;
+    color: #2d5a27;
+    margin-top: 20px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+/* تطبيق حركة Fade In Up على صفحة العداد (page3) */
+.page3 {
+    opacity: 0;
+    animation: fadeInUp 1s ease-out forwards;
+    animation-play-state: paused;
+}
+
+/* تطبيق حركة Fade In Up على صفحة الخريطة (page4) */
+#page4 {
+    opacity: 0;
+    animation: fadeInUp 1s ease-out forwards;
+    animation-play-state: paused;
+}
+/* الصفحة الثانية */
+#page2 .glass-card {
+
+    opacity: 0;
+    transform:
+        scale(0.7)
+        translateY(80px);
+
+  transition:
+    opacity 2.2s ease,
+    transform 2.2s cubic-bezier(0.22, 1, 0.36, 1);
+
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(8px);
+
+}
+
+/* لما الصفحة تظهر */
+#page2.show .glass-card {
+
+    opacity: 1;
+
+    transform:
+        scale(1)
+        translateY(0);
+
+}
+
+/* الأسماء */
+#page2 .names {
+
+    font-family: 'Dancing Script', cursive !important;
+
+    font-size: 170px !important;
+
+    line-height: 0.8;
+
+    color: #2d5a27;
+
+    margin: 0;
+
+    opacity: 0;
+
+    transform:
+        scale(0.5)
+        translateY(40px);
+
+   transition:
+    opacity 2.8s ease 0.6s,
+    transform 2.8s cubic-bezier(0.22, 1, 0.36, 1) 0.6s;
+
+    text-shadow:
+        0 0 10px rgba(255,255,255,0.8),
+        0 0 30px rgba(255,255,255,0.5);
+
+}
+
+/* ظهور الأسماء */
+#page2.show .names {
+
+    opacity: 1;
+
+    transform:
+        scale(1)
+        translateY(0);
+
+}
+
+/* للموبايل */
+@media (max-width: 600px) {
+
+    #page2 .names {
+
+        font-size: 95px !important;
+
+    }
+
+}
+.envelope-wrapper {
+    animation: floatEnvelope 3s ease-in-out infinite;
+}
+
+@keyframes floatEnvelope {
+
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-12px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+
+}
+@keyframes elegantOpen {
+
+    0% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+
+    30% {
+        transform: scale(1.05) rotate(-3deg);
+    }
+
+    60% {
+        transform: scale(1.1) rotate(3deg);
+    }
+
+    100% {
+        transform: scale(0.85) translateY(-40px);
+        opacity: 0;
+    }
+
+}
+
+.open-animation {
+    animation: elegantOpen 1.8s ease forwards;
+}
+
+    </style>
+
+</head>
+<body>
+    <audio id="bgMusic" src="music.mp3" loop></audio>
+    <div class="roses-container" id="rosesContainer"></div>
+    <div class="container" id="pageContainer">
+        
+        <section class="page" id="page1">
+            <div class="full-bg"></div>
+            <div class="overlay"></div>
+            <div class="content">
+                <div class="main-title">OPEN THE INVITATION</div>
+                <div class="envelope-wrapper" onclick="openEnvelope()">
+                    <img src="closed.jpeg" id="envImg" class="envelope-img">
+                </div>
+            </div>
+        </section>
+
+  <section class="page" id="page2">
+    <div class="full-bg"></div>
+    <div class="overlay"></div>
+    <div class="content">
+        <div class="glass-card" >
+            <h1 class="names">Eslam<br>&<br>Aya</h1>
+            <div class="sub-text">TOGETHER WITH THEIR FAMILIES</div>
+            <div class="date-line">
+                WEDNESDAY • JUNE 17TH 2026<br>
+                8:00 PM
+            </div>
+        </div>
+    </div>
+</section>
+
+        <section class="page page3" id="page3">
+            <div class="content">
+                <div class="roses-container" id="rosesContainer"></div>
+                <h2 style="letter-spacing: 4px; margin-bottom: 40px; font-family: 'Georgia', serif;">COUNTDOWN TO OUR FOREVER</h2>
+                <div class="timer-grid">
+                    <div class="time-box"><div class="time-num" id="days">00</div><div>Days</div></div>
+                    <div class="time-box"><div class="time-num" id="hours">00</div><div>Hours</div></div>
+                    <div class="time-box"><div class="time-num" id="minutes">00</div><div>Mins</div></div>
+                    <div class="time-box"><div class="time-num" id="seconds">00</div><div>Secs</div></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="page" style="background-color: #e2ebd9;" id="page4">
+            <div class="content">
+                <h2 style="color: #2d5a27; font-size: 35px; font-family: 'Georgia', serif; margin-bottom: 10px;">Wedding Venue</h2>
+                <p style="color: #555; font-size: 16px; margin-bottom: 25px;"><strong>El Massia_Nakheel Village AGA WEDDING HALL</strong><br></p>
+                <div class="map-card">
+                    <img src="map-preview.jpeg" class="map-img">
+                    <a href="https://maps.app.goo.gl/fa794eJdRxRVpq5t6?g_st=aw" target="_blank" class="btn">Open Location ↗</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="page page5" id="page5">
+            <div class="content">
+                <div style="font-size: 20px; letter-spacing: 8px; color: #4a4538; margin-bottom: 30px; text-transform: uppercase; opacity: 0.7;">
+            <h1>Invitation</h1>
+        </div>
+                <div class="invitation-text">
+
+                    <p>WITH HEARTS FULL OF LOVE AND JOY,</p>
+                    <p>WE INVITE YOU TO CELEBRATE OUR SPECIAL DAY.</p>
+                    <p style="margin: 30px 0; font-style: italic; opacity: 0.85;">
+                        YOUR PRESENCE WILL MAKE 
+                        THIS BEAUTIFUL OCCASION EVEN MORE MEANINGFUL AND
+                         UNFORGETTABLE.</p>
+                    <p>JOIN US FOR AN ELEGANT EVENING FILLED WITH LOVE, LAUGHTER, HAPPINESS, AND 
+                        FOREVER MEMORIES.</p>
+                </div>
+                <a href="#" class="names-btn">Eslam & Aya</a>
+            
+        </section>
+
+    </div>
+
+
+    <script>
+     function openEnvelope() {
+    const envelope = document.querySelector('.envelope-wrapper');
+    const envImg = document.getElementById('envImg');
+
+    // 1. منع الضغط مرتين وإيقاف حركة الاهتزاز
+    envelope.style.pointerEvents = 'none';
+    envelope.style.animation = 'none';
+
+    // 2. حركة خفيفة وناعمة للظرف
+    envelope.style.transition = "all 1.2s ease";
+    envelope.style.transform = "translateY(-20px) scale(1.05)";
+
+    // 3. تغيير الصورة إلى الظرف المفتوح
+    setTimeout(() => {
+        envImg.src = 'ope.png';
+        envelope.style.transform = "translateY(-40px) scale(1.08)";
+    }, 350);
+
+    // 4. تشغيل الموسيقى
+    const bgMusic = document.getElementById('bgMusic');
+    if (bgMusic) {
+        bgMusic.play().catch(err => console.log("خطأ في تشغيل الصوت: ", err));
+    }
+
+    // 5. خروج القلوب والورود بهدوء
+    for(let i = 0; i < 15; i++) {
+        setTimeout(() => {
+            createRisingElements();
+        }, i * 120);
+    }
+
+    // 6. إخفاء الظرف بنعومة ثم الانتقال لصفحة الأسماء
+    setTimeout(() => {
+        envelope.style.opacity = '0'; // الظرف يختفي بهدوء
+        
+        // الانتقال للصفحة الثانية بعد بدء الاختفاء
+        setTimeout(() => {
+            document.getElementById('page2').scrollIntoView({
+                behavior: 'smooth'
+            });
+        }, 500); 
+
+    }, 1700); // الانتظار 1.7 ثانية بعد الفتح قبل الانتقال
+}
+      
+    // 1. دالة فتح الظرف وتشغيل الصوت
+    function openEnvelope() {
+        const envelope = document.querySelector('.envelope-wrapper');
+        const envImg = document.getElementById('envImg');
+
+        // منع الضغط مرتين وإيقاف الاهتزاز
+        envelope.style.pointerEvents = 'none';
+        envelope.style.animation = 'none';
+
+        // حركة الرفع
+        envelope.style.transition = "all 1.2s ease";
+        envelope.style.transform = "translateY(-20px) scale(1.05)";
+
+        // تغيير الصورة إلى الظرف المفتوح
+        setTimeout(() => {
+            envImg.src = 'ope.png'; // تأكد من اسم صورة الظرف المفتوح
+            envelope.style.transform = "translateY(-40px) scale(1.08)";
+        }, 350);
+
+        // تشغيل الموسيقى
+        const bgMusic = document.getElementById('bgMusic');
+        if (bgMusic) {
+            let playPromise = bgMusic.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.log("تعذر تشغيل الصوت، تأكد من مسار وصيغة الملف:", error);
+                });
+            }
+        }
+
+        // خروج القلوب وقت الفتح
+        for(let i = 0; i < 15; i++) {
+            setTimeout(() => {
+                createRisingElements();
+            }, i * 120);
+        }
+
+        // إخفاء الظرف والانتقال للصفحة الثانية
+        setTimeout(() => {
+            envelope.style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('page2').scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }, 500); 
+        }, 1700);
+    }
+
+    // 2. دالة إنشاء القلوب والورود
+    function createRisingElements() {
+        const container = document.getElementById('rosesContainer');
+        if (!container) return; 
+        
+        const element = document.createElement('div');
+        element.classList.add('rose');
+        
+        // اختيار عشوائي بين القلب والوردة
+        element.innerHTML = (Math.random() > 0.5) ? '🤍' : '❤️'; 
+        
+        element.style.left = Math.random() * 100 + 'vw';
+        element.style.animationDuration = (Math.random() * 3 + 4) + 's';
+        element.style.fontSize = (Math.random() * 10 + 15) + 'px';
+
+        container.appendChild(element);
+        
+        // إزالة العنصر بعد انتهاء حركته لتخفيف الحمل على المتصفح
+        setTimeout(() => element.remove(), 6000);
+    }
+
+    // تشغيل هطول الورود والقلوب تلقائياً باستمرار
+    setInterval(createRisingElements, 300);
+
+    // 3. العداد التنازلي
+    const weddingDate = new Date("June 17, 2026 18:00:00").getTime();
+    setInterval(() => {
+        const now = new Date().getTime();
+        const diff = weddingDate - now;
+        
+        if (diff > 0) {
+            document.getElementById("days").innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+            document.getElementById("hours").innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            document.getElementById("minutes").innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            document.getElementById("seconds").innerText = Math.floor((diff % (1000 * 60)) / 1000);
+        }
+    }, 1000);
+
+    // 4. حركات ظهور العناصر عند النزول بالصفحة (Scroll Animations)
+    document.addEventListener('DOMContentLoaded', () => {
+        const animatedElements = document.querySelectorAll('.page, .glass-card, .page3, #page4');
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            root: null,
+            rootMargin: '0px 0px -10% 0px',
+            threshold: 0.1
+        });
+
+        animatedElements.forEach(element => {
+            observer.observe(element);
+        });
+    });
+
+    // 5. حركة ظهور الأسماء في الصفحة الثانية
+    const page2 = document.getElementById('page2');
+    if (page2) {
+        const observer2 = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    page2.classList.add('show');
+                }
+            });
+        }, {
+            threshold: 0.5
+        });
+        observer2.observe(page2);
+    }
+</script>
+
+        // حساب العداد التنازلي لـ 17/6/2026
+        const weddingDate = new Date("June 17, 2026 18:00:00").getTime();
+        setInterval(() => {
+            const now = new Date().getTime();
+            const diff = weddingDate - now;
+            document.getElementById("days").innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+            document.getElementById("hours").innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            document.getElementById("minutes").innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            document.getElementById("seconds").innerText = Math.floor((diff % (1000 * 60)) / 1000);
+        }, 1000);
+        // دالة لتفعيل الأنيميشن عند الوصول للعنصر (Intersection Observer)
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. تحديد العناصر اللي عايزين نراقبها
+    const animatedElements = document.querySelectorAll('.page, .glass-card, .page3, #page4');
+
+    // 2. إعداد الـ Intersection Observer
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            // إذا كان العنصر ظاهر بنسبة 10% أو أكتر
+            if (entry.isIntersecting) {
+                // تفعيل الأنيميشن عن طريق تغيير animation-play-state
+                entry.target.style.animationPlayState = 'running';
+                
+                // وقف مراقبة العنصر بعد ما يتفعل الأنيميشن عشان ميتكررش
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        root: null, // استخدام الـ viewport الافتراضي
+        rootMargin: '0px 0px -10% 0px', // ميبدأش الأنيميشن إلا لما العنصر يدخل 10% من الشاشة
+        threshold: 0.1 // العنصر يعتبر ظاهر لو بان منه 10%
+    });
+
+    // 3. بدء مراقبة كل عنصر
+    animatedElements.forEach(element => {
+        observer.observe(element);
+    });
+});
+const page2 = document.getElementById('page2');
+
+const observer2 = new IntersectionObserver((entries) => {
+
+    entries.forEach(entry => {
+
+        if (entry.isIntersecting) {
+
+            page2.classList.add('show');
+
+        }
+
+    });
+
+}, {
+    threshold: 0.5
+});
+observer2.observe(page2);
+    </script>
+</body>
+</html>
